@@ -3,59 +3,64 @@
 {% block content %}
 <div id="map" style="height: 600px;"></div> <!-- Div per la mappa -->
 
-<!-- Barra di scorrimento per selezionare l'anno -->
-<!-- Barra di scorrimento per selezionare l'anno -->
+<!-- Slider per selezionare la data con range da oggi a fine 2025 -->
 <div style="text-align: center; margin-top: 10px;">
-    <label for="yearSlider">Seleziona un anno: </label>
-    <input type="range" id="yearSlider" min="1900" max="2050" step="1" value="2024">
-    <span id="selectedYear">2024</span>
+    <label for="daySlider">Seleziona una data: </label>
+    <input type="range" id="daySlider" min="0" max="433" step="1" value="0" class="colorful-slider"> <!-- 433 giorni tra oggi e il 31/12/2025 -->
+    <span id="selectedDate">2024-10-25</span>
     <button id="downloadBtn" style="margin-left: 10px; background-color: #FF0000; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Scarica CSV</button>
+    
+    <!-- Pulsante per mostrare/nascondere l'overlay -->
+    <button class="show-overlay" onclick="toggleOverlay()" style="margin-left: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Mostra/Nascondi Legenda</button>
 </div>
 
+<!-- Overlay della legenda -->
+<div class="overlay" id="legendOverlay" style="display: none; position: fixed; top: 20px; left: 20px; width: 250px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 9999;">
+    <h3>Probability</h3>
+    <p><span style="color: red;">🔴</span> Red: 0-65%</p>
+    <p><span style="color: yellow;">🟡</span> Yellow: 65-80%</p>
+    <p><span style="color: green;">🟢</span> Green: 80-100%</p>
+</div>
 
 <script>
     // Inizializza la mappa
     var map = L.map('map').setView([51.505, -0.09], 5);
 
-    // Aggiungi i tile alla mappa
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
     }).addTo(map);
 
-    // Dati degli eventi
     var eventData = {{ event_data|tojson }};
 
-    // Scala dei colori e dimensioni in base alla severità
     var colorScale = {
-        1: '#FFD700', // Giallo per severity 1
-        2: '#FFA500', // Arancione per severity 2
-        3: '#FF8C00', // Arancione scuro per severity 3
-        4: '#FF4500', // Rosso aranciato per severity 4
-        5: '#FF0000'  // Rosso per severity 5
+        1: '#FFD700', 
+        2: '#FFA500',
+        3: '#FF8C00',
+        4: '#FF4500',
+        5: '#FF0000'
     };
 
-    // Mantenere una lista di cerchi per rimuoverli al cambio di anno
     var eventCircles = [];
 
-    // Funzione per aggiornare la mappa in base all'anno selezionato
-    function updateMap(selectedYear) {
-        // Rimuovi tutti i cerchi dalla mappa
+    // Data di inizio (oggi) e calcolo data di fine
+    var baseDate = new Date(); // Oggi
+    var endDate = new Date('2025-12-31'); // Fine 2025
+
+    // Funzione per aggiornare la mappa in base alla data selezionata
+    function updateMap(selectedDate) {
         eventCircles.forEach(function(circle) {
             map.removeLayer(circle);
         });
         eventCircles = [];
 
-        // Filtra gli eventi in base all'anno selezionato
         var filteredEvents = eventData.filter(function(event) {
-            var eventYear = new Date(event.data_inizio).getFullYear();
-            return eventYear === selectedYear;
+            return new Date(event.data_inizio).toISOString().split('T')[0] === selectedDate;
         });
 
-        // Aggiungi i cerchi per gli eventi filtrati
         filteredEvents.forEach(function(event) {
             var coordinate = [event.latitudine, event.longitudine];
             var fillColor = colorScale[event.severity];
-            var radius = event.severity * 50000;
+            var radius = 25000;
 
             var cerchio = L.circle(coordinate, {
                 color: 'red',
@@ -64,7 +69,6 @@
                 radius: radius
             }).addTo(map);
 
-            // Aggiungi un tooltip con le informazioni
             cerchio.bindTooltip(`
                 <strong>Location:</strong> ${event.luogo} <br>
                 <strong>Event:</strong> ${event.evento} <br>
@@ -74,33 +78,32 @@
                 direction: "top"
             });
 
-            // Aggiungi il cerchio alla lista per gestire il reset
             eventCircles.push(cerchio);
         });
     }
 
     // Gestisci il cambiamento della data tramite lo slider
-    var yearSlider = document.getElementById('yearSlider');
-    var selectedYearLabel = document.getElementById('selectedYear');
+    var daySlider = document.getElementById('daySlider');
+    var selectedDateLabel = document.getElementById('selectedDate');
 
-    yearSlider.addEventListener('input', function() {
-        var selectedYear = parseInt(yearSlider.value);
-        selectedYearLabel.innerText = selectedYear;
-        updateMap(selectedYear);
+    daySlider.addEventListener('input', function() {
+        var daysOffset = parseInt(daySlider.value);
+        var selectedDate = new Date(baseDate);
+        selectedDate.setDate(selectedDate.getDate() + daysOffset);
+        var formattedDate = selectedDate.toISOString().split('T')[0];
+        
+        selectedDateLabel.innerText = formattedDate;
+        updateMap(formattedDate);
     });
 
-    // Inizializza la mappa con l'anno di default
-    updateMap(parseInt(yearSlider.value));
+    // Inizializza la mappa con la data di default (oggi)
+    updateMap(selectedDateLabel.innerText);
 
-    // Funzione per scaricare i dati in formato CSV
-    function downloadCSV(selectedYear) {
-        // Filtra gli eventi in base all'anno selezionato
+    function downloadCSV(selectedDate) {
         var filteredEvents = eventData.filter(function(event) {
-            var eventYear = new Date(event.data_inizio).getFullYear();
-            return eventYear === selectedYear;
+            return new Date(event.data_inizio).toISOString().split('T')[0] === selectedDate;
         });
 
-        // Crea il contenuto CSV
         var csvContent = "data:text/csv;charset=utf-8," 
             + "id,luogo,evento,data_inizio,data_fine,severity,longitudine,latitudine\n"
             + filteredEvents.map(event => [
@@ -108,22 +111,25 @@
                 event.data_fine, event.severity, event.longitudine, event.latitudine
             ].join(",")).join("\n");
 
-        // Crea un link per il download
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `eventi_${selectedYear}.csv`);
-        document.body.appendChild(link); // necessario per Firefox
+        link.setAttribute("download", `eventi_${selectedDate}.csv`);
+        document.body.appendChild(link);
 
-        link.click(); // simula il click per scaricare il file
-        document.body.removeChild(link); // rimuovi il link dopo il download
+        link.click();
+        document.body.removeChild(link);
     }
 
-    // Gestisci il click sul bottone di download
     var downloadBtn = document.getElementById('downloadBtn');
     downloadBtn.addEventListener('click', function() {
-        var selectedYear = parseInt(yearSlider.value);
-        downloadCSV(selectedYear);
+        downloadCSV(selectedDateLabel.innerText);
     });
+
+    // Funzione per mostrare/nascondere l'overlay della legenda
+    function toggleOverlay() {
+        const overlay = document.getElementById('legendOverlay');
+        overlay.style.display = overlay.style.display === 'none' || overlay.style.display === '' ? 'block' : 'none';
+    }
 </script>
 {% endblock %}

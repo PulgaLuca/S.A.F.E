@@ -85,7 +85,7 @@ footer:hover {
 /* Stile per lo slider */
 #yearSlider {
     -webkit-appearance: none;
-    width: 70%; /* Larghezza dello slider */
+    width: 50%; /* Larghezza dello slider */
     height: 10px;
     background: #ddd; /* Colore di sfondo */
     outline: none;
@@ -126,3 +126,39 @@ footer:hover {
     color: #ff0000; /* Colore del testo dell'anno */
     margin-left: 10px;
 }
+
+  /* Stili per l'input slider */
+  .colorful-slider {
+    -webkit-appearance: none; /* Rimuove lo stile predefinito per alcuni browser */
+    width: 50%;
+    height: 15px;
+    border-radius: 10px;
+    background: linear-gradient(to right, green, yellow, red); /* Sfondo sfumato */
+    outline: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  /* Hover sull'input per effetto */
+  .colorful-slider:hover {
+    opacity: 1;
+  }
+
+  /* Stili per il cursore */
+  .colorful-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Rimuove lo stile predefinito per alcuni browser */
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background-color: #4CAF50; /* Colore del cursore */
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .colorful-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background-color: #4CAF50; /* Colore del cursore */
+    cursor: pointer;
+    border-radius: 50%;
+  }

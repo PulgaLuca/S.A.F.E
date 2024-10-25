@@ -4,11 +4,14 @@
 <div id="map" style="height: 600px;"></div> <!-- Div per la mappa -->
 
 <!-- Barra di scorrimento per selezionare l'anno -->
+<!-- Barra di scorrimento per selezionare l'anno -->
 <div style="text-align: center; margin-top: 10px;">
     <label for="yearSlider">Seleziona un anno: </label>
-    <input type="range" id="yearSlider" min="1948" max="2050" step="1" value="2024">
+    <input type="range" id="yearSlider" min="1900" max="2050" step="1" value="2024">
     <span id="selectedYear">2024</span>
+    <button id="downloadBtn" style="margin-left: 10px; background-color: #FF0000; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Scarica CSV</button>
 </div>
+
 
 <script>
     // Inizializza la mappa
@@ -88,5 +91,39 @@
 
     // Inizializza la mappa con l'anno di default
     updateMap(parseInt(yearSlider.value));
+
+    // Funzione per scaricare i dati in formato CSV
+    function downloadCSV(selectedYear) {
+        // Filtra gli eventi in base all'anno selezionato
+        var filteredEvents = eventData.filter(function(event) {
+            var eventYear = new Date(event.data_inizio).getFullYear();
+            return eventYear === selectedYear;
+        });
+
+        // Crea il contenuto CSV
+        var csvContent = "data:text/csv;charset=utf-8," 
+            + "id,luogo,evento,data_inizio,data_fine,severity,longitudine,latitudine\n"
+            + filteredEvents.map(event => [
+                event.id, event.luogo, event.evento, event.data_inizio,
+                event.data_fine, event.severity, event.longitudine, event.latitudine
+            ].join(",")).join("\n");
+
+        // Crea un link per il download
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `eventi_${selectedYear}.csv`);
+        document.body.appendChild(link); // necessario per Firefox
+
+        link.click(); // simula il click per scaricare il file
+        document.body.removeChild(link); // rimuovi il link dopo il download
+    }
+
+    // Gestisci il click sul bottone di download
+    var downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', function() {
+        var selectedYear = parseInt(yearSlider.value);
+        downloadCSV(selectedYear);
+    });
 </script>
 {% endblock %}

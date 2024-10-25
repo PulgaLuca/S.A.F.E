@@ -1,46 +1,4 @@
 /* main.css */
-
-/* Stile per l'header */
-header {
-    background-color: #333;
-    color: white;
-    padding: 15px 0;
-    position: relative; /* Assicurati che l'header non sia fisso */
-    z-index: 10; /* Mantiene l'header sopra altri contenuti */
-}
-
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto; /* Centra l'header nella pagina */
-    padding: 0 20px;
-}
-
-/* Stile per il logo */
-.header-container .logo img {
-    width: 60px; /* Regola la dimensione del logo secondo necessità */
-    height: auto;
-}
-
-/* Stile per il titolo */
-.header-container .title h1 {
-    font-size: 24px;
-    margin: 0;
-}
-
-/* Stile per il footer */
-footer {
-    background-color: #FF0000; /* Rosso */
-    color: white;              /* Testo bianco */
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
 /* Stile per il contenuto */
 #content {
     padding: 20px;
@@ -52,4 +10,119 @@ footer {
     height: calc(100vh - 120px); /* Altezza della mappa in base alla viewport */
     width: 100%;                 /* Mappa a piena larghezza */
     margin-top: 20px;           /* Spazio sopra la mappa */
+}
+
+/* Stile per il footer */
+footer {
+    background-color: #FF0000; /* Rosso */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-radius: 10px 10px 0 0; /* Angoli smussati in alto */
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2); /* Ombra per effetto 3D */
+}
+
+/* Stile per l'header */
+/* Centra il titolo al centro dell'header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    position: relative;
+    z-index: 10;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Layout migliorato per l'header */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Stile per il logo */
+.header-container .logo img {
+    width: 60px; /* Dimensione del logo */
+    height: auto;
+    border-radius: 50%; /* Smussa i bordi del logo */
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); /* Ombra per effetto rilievo */
+}
+
+/* Stile per il titolo */
+.header-container .title h1 {
+    font-size: 28px;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    font-weight: 600;
+    text-align: center; /* Centra il testo all'interno del titolo */
+}
+
+/* Piccolo effetto hover per il footer */
+footer:hover {
+    background-color: #cc0000; /* Colore leggermente più scuro al passaggio del mouse */
+    transition: background-color 0.3s ease;
+}
+
+/* Stile per il contenitore dello slider */
+.slider-container {
+    text-align: center;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Stile per lo slider */
+#yearSlider {
+    -webkit-appearance: none;
+    width: 70%; /* Larghezza dello slider */
+    height: 10px;
+    background: #ddd; /* Colore di sfondo */
+    outline: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+#yearSlider:hover {
+    opacity: 1;
+}
+
+/* Stile per il cursore dello slider */
+#yearSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000; /* Colore del cursore */
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Ombra del cursore */
+}
+
+#yearSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Stile per il testo dell'anno selezionato */
+#selectedYear {
+    font-weight: bold;
+    color: #ff0000; /* Colore del testo dell'anno */
+    margin-left: 10px;
 }

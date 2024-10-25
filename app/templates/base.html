@@ -11,9 +11,15 @@
 <body>
     <!-- Header -->
     <header>
-        <h1>S.A.F.E</h1>
+        <div class="header-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo-easy.png') }}" alt="SAFE Logo">
+            </div>
+            <div class="title">
+                <h1>S.A.F.E</h1>
+            </div>
+        </div>
     </header>
-
     <!-- Main Content -->
     <div id="content">
         {% block content %}{% endblock %}

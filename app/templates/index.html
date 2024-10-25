@@ -6,8 +6,8 @@
 <!-- Barra di scorrimento per selezionare l'anno -->
 <div style="text-align: center; margin-top: 10px;">
     <label for="yearSlider">Seleziona un anno: </label>
-    <input type="range" id="yearSlider" min="2022" max="2024" step="1" value="2022">
-    <span id="selectedYear">2022</span>
+    <input type="range" id="yearSlider" min="1948" max="2050" step="1" value="2024">
+    <span id="selectedYear">2024</span>
 </div>
 
 <script>
@@ -21,14 +21,14 @@
 
     // Dati degli eventi
     var eventData = {{ event_data|tojson }};
-    
-    // Scala dei colori in base alla gravità
+
+    // Scala dei colori e dimensioni in base alla severità
     var colorScale = {
-        1: '#ffcccc',
-        2: '#ff9999',
-        3: '#ff6666',
-        4: '#ff3333',
-        5: '#ff0000'
+        1: '#FFD700', // Giallo per severity 1
+        2: '#FFA500', // Arancione per severity 2
+        3: '#FF8C00', // Arancione scuro per severity 3
+        4: '#FF4500', // Rosso aranciato per severity 4
+        5: '#FF0000'  // Rosso per severity 5
     };
 
     // Mantenere una lista di cerchi per rimuoverli al cambio di anno
@@ -52,7 +52,7 @@
         filteredEvents.forEach(function(event) {
             var coordinate = [event.latitudine, event.longitudine];
             var fillColor = colorScale[event.severity];
-            var radius = event.severity * 1000;
+            var radius = event.severity * 50000;
 
             var cerchio = L.circle(coordinate, {
                 color: 'red',
@@ -63,9 +63,9 @@
 
             // Aggiungi un tooltip con le informazioni
             cerchio.bindTooltip(`
-                <strong>Luogo:</strong> ${event.luogo} <br>
-                <strong>Evento:</strong> ${event.evento} <br>
-                <strong>Severità:</strong> ${event.severity}
+                <strong>Location:</strong> ${event.luogo} <br>
+                <strong>Event:</strong> ${event.evento} <br>
+                <strong>Severity:</strong> ${event.severity}
             `, {
                 permanent: false,
                 direction: "top"

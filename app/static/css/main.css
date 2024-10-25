@@ -162,3 +162,19 @@ footer:hover {
     cursor: pointer;
     border-radius: 50%;
   }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    margin-left: 15px;
+}
+
+.acronym {
+    font-size: 1rem;
+    font-weight: normal;
+    color: white;
+    margin-top: -5px; /* Se vuoi avvicinarlo al titolo */
+}

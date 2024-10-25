@@ -1,0 +1,63 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div id="map"></div> <!-- Div per la mappa -->
+<script>
+    // Inizializza la mappa con limiti massimi definiti
+    var map = L.map('map', {
+        worldCopyJump: false, // Disabilita la ripetizione della mappa
+        maxBounds: [
+            [-85, -180], // Limite Sud-Ovest
+            [85, 180]    // Limite Nord-Est
+        ],
+        maxBoundsViscosity: 1.0 // Limita l'elasticità del bordo della mappa
+    }).setView([51.505, -0.09], 2);
+
+    // Aggiungi i tile alla mappa
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    // Dati per il puntino rosso
+    var coordinate = [51.505, -0.09]; // Coordinate del punto
+    var gravita = 3; // Gravità dell'evento (da 1 a 5)
+    var luogo = "Londra, Regno Unito";
+    var evento = "Alluvione";
+    var rischio = "Moderato";
+
+    // Scala dei colori in base alla gravità
+    var colorScale = {
+        1: '#ffcccc', // Gravità bassa, rosso chiaro
+        2: '#ff9999',
+        3: '#ff6666',
+        4: '#ff3333',
+        5: '#ff0000'  // Gravità alta, rosso intenso
+    };
+
+    // Ottieni il colore in base alla gravità
+    var fillColor = colorScale[gravita];
+
+    // Calcola il raggio in base alla gravità
+    var raggio = gravita * 1000; // Il raggio è regolato in base alla scala
+
+    // Aggiungi un cerchio rosso
+    var cerchioRosso = L.circle(coordinate, {
+        color: 'red', // Bordo rosso
+        fillColor: fillColor, // Colore di riempimento basato sulla gravità
+        fillOpacity: 0.5, // Opacità del riempimento
+        radius: raggio // Il raggio è in metri
+    }).addTo(map);
+
+    // Aggiungi un tooltip con le informazioni
+    cerchioRosso.bindTooltip(`
+        <strong>Luogo:</strong> ${luogo} <br>
+        <strong>Coordinate:</strong> [${coordinate[0]}, ${coordinate[1]}] <br>
+        <strong>Evento:</strong> ${evento} <br>
+        <strong>Rischio:</strong> ${rischio}
+    `, {
+        permanent: false, // Tooltip visibile solo al passaggio del mouse
+        direction: "top"
+    });
+</script>
+{% endblock %}

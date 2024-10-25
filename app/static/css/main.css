@@ -1,0 +1,55 @@
+/* main.css */
+
+/* Stile per l'header */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    position: relative; /* Assicurati che l'header non sia fisso */
+    z-index: 10; /* Mantiene l'header sopra altri contenuti */
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto; /* Centra l'header nella pagina */
+    padding: 0 20px;
+}
+
+/* Stile per il logo */
+.header-container .logo img {
+    width: 60px; /* Regola la dimensione del logo secondo necessità */
+    height: auto;
+}
+
+/* Stile per il titolo */
+.header-container .title h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Stile per il footer */
+footer {
+    background-color: #FF0000; /* Rosso */
+    color: white;              /* Testo bianco */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Stile per il contenuto */
+#content {
+    padding: 20px;
+    padding-bottom: 60px; /* Aggiungi uno spazio per il footer fisso */
+}
+
+/* Stile per la mappa */
+#map {
+    height: calc(100vh - 120px); /* Altezza della mappa in base alla viewport */
+    width: 100%;                 /* Mappa a piena larghezza */
+    margin-top: 20px;           /* Spazio sopra la mappa */
+}

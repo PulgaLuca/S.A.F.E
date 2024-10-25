@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Mappa del mondo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Mappa Interattiva del Mondo</h1>
+    <div class="map-container">
+        {{ mappa_html|safe }}
+    </div>
+</body>
+</html>

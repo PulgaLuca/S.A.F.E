@@ -9,6 +9,8 @@
     <input type="range" id="daySlider" min="0" max="433" step="1" value="0" class="colorful-slider"> <!-- 433 giorni tra oggi e il 31/12/2025 -->
     <span id="selectedDate">2024-10-25</span>
     <button id="downloadBtn" style="margin-left: 10px; background-color: #FF0000; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Download CSV</button>
+    <!-- Pulsante per mostrare/nascondere l'overlay -->
+    <button class="show-overlay" onclick="toggleOverlay()" style="margin-left: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Show/Hide Key</button>
     <br>
     <!-- Etichette Higher Probability e Lower Probability sotto lo slider -->
     <div style="display: flex; margin-top: 5px;">
@@ -17,6 +19,13 @@
     </div>
 </div>
 
+<!-- Overlay della legenda -->
+<div class="overlay" id="legendOverlay" style="display: none; position: fixed; top: 300px; left: 40px; width: 200px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 9999;">
+    <h3>Severity Score:</h3>
+    <p><span >🔴</span> Red: 5</p>
+    <p><span >🟠</span> Orange: 3-4</p>
+    <p><span >🟡</span> Yellow: 1-2</p>
+</div>
 
 
 <script>

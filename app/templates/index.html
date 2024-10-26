@@ -9,18 +9,15 @@
     <input type="range" id="daySlider" min="0" max="433" step="1" value="0" class="colorful-slider"> <!-- 433 giorni tra oggi e il 31/12/2025 -->
     <span id="selectedDate">2024-10-25</span>
     <button id="downloadBtn" style="margin-left: 10px; background-color: #FF0000; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Download CSV</button>
-    
-    <!-- Pulsante per mostrare/nascondere l'overlay -->
-    <button class="show-overlay" onclick="toggleOverlay()" style="margin-left: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Show/Hide Key</button>
+    <br>
+    <!-- Etichette Higher Probability e Lower Probability sotto lo slider -->
+    <div style="display: flex; margin-top: 5px;">
+        <span style="color: #003366; margin-left: 300px;">Higher Probability</span>
+        <span style="color: #003366; margin-left: 700px">Lower Probability</span>
+    </div>
 </div>
 
-<!-- Overlay della legenda -->
-<div class="overlay" id="legendOverlay" style="display: none; position: fixed; top: 300px; left: 20px; width: 250px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 9999;">
-    <h3>Probability:</h3>
-    <p><span style="color: red;">🔴</span> Red: 0-65%</p>
-    <p><span style="color: yellow;">🟡</span> Yellow: 65-80%</p>
-    <p><span style="color: green;">🟢</span> Green: 80-100%</p>
-</div>
+
 
 <script>
     // Inizializza la mappa
@@ -63,7 +60,7 @@
             var radius = 25000;
 
             var cerchio = L.circle(coordinate, {
-                color: 'red',
+                color: colorScale[event.severity],
                 fillColor: fillColor,
                 fillOpacity: 0.5,
                 radius: radius

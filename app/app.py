@@ -25,8 +25,8 @@ def create_app():
     @app.route('/')
     def index():
         # Leggi i CSV
-        weather_data = pd.read_csv(r'C:\Users\Luca\Desktop\weather_data.csv')
-        event_data = pd.read_csv(r'C:\Users\Luca\Desktop\event_data_with_location.csv')
+        weather_data = pd.read_csv('../data/csv/weather_data.csv')
+        event_data = pd.read_csv('../data/csv/event_data_with_location.csv')
         
         # Converti i DataFrame in dizionari
         weather_data_dict = weather_data.to_dict(orient='records')

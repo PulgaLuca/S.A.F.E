@@ -25,7 +25,35 @@ Our adaptable pricing model ensures accessibility for individuals, corporations,
 - **Cloud Infrastructure**: Scalable cloud services for data storage, processing, and distribution.
 - **APIs**: Seamless data access for clients through well-documented APIs.
 - **Programming Languages:** Python
----
+
+
+### 🛠️ **How to run the app**
+# Guide to Set Up and Run Your Flask App
+
+## 1. Install Python
+1. Download the latest version of Python from the official website: [https://www.python.org/](https://www.python.org/).
+2. During installation, **check the "Add Python to PATH" option**.
+3. Complete the installation.
+
+## 2. Set Up a Virtual Environment
+1. Open a terminal (cmd, PowerShell, or Linux terminal).
+2. Navigate to the root directory of your project (where `SAFE` is located):
+   ```bash
+   cd path_to_your_project/SAFE
+Create a virtual environment:
+    python -m venv venv
+Activate the virtual environment:
+- Windows: venv\Scripts\activate
+- Mac/Linux: source venv/bin/activate
+3. Install requirements.txt file (list of dependencies), use:
+pip install -r requirements.txt
+4. Make sure you are in the SAFE/APP directory and then type on CMD:
+'python app.py' or 'flask run'
+You should see an output similar to this:
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+
 
 
 **Let’s make the world safer, together.** 🌍

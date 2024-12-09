@@ -64,5 +64,6 @@ You should see an output similar to this:
 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 
+pip install pyinstaller
 
 **Let’s make the world safer, together.** 🌍

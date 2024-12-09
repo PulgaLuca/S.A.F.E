@@ -28,7 +28,6 @@ Our adaptable pricing model ensures accessibility for individuals, corporations,
 
 
 ### 🛠️ **How to run the app**
-# Guide to Set Up and Run Your Flask App
 
 ## 1. Install Python
 1. Download the latest version of Python from the official website: [https://www.python.org/](https://www.python.org/).
@@ -40,19 +39,29 @@ Our adaptable pricing model ensures accessibility for individuals, corporations,
 2. Navigate to the root directory of your project (where `SAFE` is located):
    ```bash
    cd path_to_your_project/SAFE
-Create a virtual environment:
+3. Create a virtual environment:
+    ```bash
     python -m venv venv
-Activate the virtual environment:
-- Windows: venv\Scripts\activate
-- Mac/Linux: source venv/bin/activate
-3. Install requirements.txt file (list of dependencies), use:
+    ```
+4. Activate the virtual environment:
+- Windows: 
+    ```bash
+    venv\Scripts\activate
+- Mac/Linux: 
+    ```bash
+    source venv/bin/activate
+5. Install requirements.txt file (list of dependencies), use:
 pip install -r requirements.txt
-4. Make sure you are in the SAFE/APP directory and then type on CMD:
-'python app.py' or 'flask run'
+6. Make sure you are in the SAFE/APP directory and then type on CMD:
+    ```bash
+    python app.py
+    ```
+    or 
+    ```bash
+    flask run
+    ```
 You should see an output similar to this:
 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-
-
 
 
 
